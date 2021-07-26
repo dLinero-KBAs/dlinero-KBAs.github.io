@@ -109,70 +109,97 @@ A second function, available only for bird species, creates an interactive map s
 ### GitHub repository structure
 ***
 
+
 ```
-│   README.md                             : Description of the repository
-│   LICENSE                               : Repository license  
-│   dlinero-KBAs.github.io.Rproj          : RStudio project file 
-│   site.yml                              : Website configuration file
-│   index.Rmd                          : Markdown file with workflow overview
-│   index.html                         : html file derived from markdown
-│   Notebook.Rmd                          : Markdown file with workflow code
-│   Notebook.html                         : html file derived from markdown
+│   Notebook_files/figure-html            : Figures shown in the notebook(R Markdown)
 │
 └───data
 │   └───   Quindio.shp                    : Shapefile of the study area
-│   
+│
 └───methods
 │   └───   Workflow.jpeg                  : Workflow schema
+│   └───   howto_.jpg                     : Screenshots of the method to clone the repository
+│   └───   GIFS                           : GIFS to preview example outputs
 │   
 └───outputs
-    └───   Map_1.png                      : Example of the output of map function 1
-    └───   Map_2.png                      : Example of the output of map function 2
+│    └───   Map_1.png                     : Example of the output of map function 1
+│    └───   Map_2.png                     : Example of the output of map function 2
+│
+└───site_libs                             : Website rendering files
+│   
+│   .gitignore                            : Files to be ingored by github
+│   .nojekyll                             : Establish website themes
+│   GitHub_repository.Rmd                 : Markdown file with workflow code
+│   GitHub_repository.html                : html file derived from markdown
+│   LICENSE                               : Repository license  
+│   Notebook.Rmd                          : Markdown file with workflow code
+│   Notebook.html                         : html file derived from markdown
+│   README.md                             : Description of the repository
+│   site.yml                              : Website configuration file
+│   dlinero-KBAs.github.io.Rproj          : RStudio project file 
+│   index.Rmd                             : Markdown file with workflow overview
+│   index.html                            : html file derived from markdown
+│
 
 ```
-
 ### How to run the workflow code in your local computer {#howto}
 ***
 
+1. Sign in into your GitHub account [here](https://github.com/). 
 
-1. Sign in into your GitHub account here. 
-
-2. What were going to do is copy an existing repository into your profile. In the search tab type "dlinero/". CLick on it. You will be taken to this repository. 
-
-3. If you want to copy all the files to your own profile, including the ones used to create the website, then select Fork on the upper right corner. 
-
-4. Then you will be able to see the repository in your profile. 
-
-5. If you want to open or modify the files and run the code in your local computer, open the GitHub Desktop software. 
-
-6. To connect it with your GitHub account go to preferences, under accounts select sign in and fill the information. 
-
-7. Then under the Git option put your user name and your user email. 
-
-8. Select Save. 
-
-9. Now when you click on the dropdown of Current repository,
-Select Add, choose clone repository and then click on the Locating KBAs workflow. Select the local path where you will like to store all the files. Click clone. 
+2. To copy the repository to your profile, go to the search tab at the top of the screen and type dLinero-KBAs/dlinero-KBAs.github.io
 
 
-10. Click show in finder to open the file explorer in the path you specified. Open the dlinero-KBAs.github.io.Rproj file to open the R project in RStudio. On the bottom right corner, where all the files are listed, select the Notebook.Rmd to open the Rmarkdown file. 
+```{r fig 1, echo=FALSE, out.width = '75%', fig.align="center"}
+knitr::include_graphics("./methods/howto_step1.jpg")
+```
 
-11. Now, you are ready to modify the code and run it!
 
-12. If you have modified the file and want to record the changes in your github repository. Go to the GitHub Desktop software, write the description of the change, and press the commit to master button 
+4. Click on the repository
 
-13. Finally, press push origin.  
+5. Click the fork button in the right corner.
 
+```{r fig 2, echo=FALSE, out.width = '75%', fig.align="center"}
+knitr::include_graphics("./methods/howto_step5.jpg")
+```
+
+6. If you want to open or modify the files and run the code in your local computer, open the GitHub Desktop software. 
+
+7. If this is your first time opening the software, it will ask you to sign into your GitHub account. Once done, select the Locating KBAs repository and click the clone button at the bottom.
+
+```{r fig 3, echo=FALSE, out.width = '75%', fig.align="center"}
+knitr::include_graphics("./methods/howto_step7.jpg")
+```
+
+8.  In the pop-up window, select GitHub.com and set the folder where you want to save all the files that are in the repository.
+
+
+```{r fig 4, echo=FALSE, out.width = '75%', fig.align="center"}
+knitr::include_graphics("./methods/howto_step8.jpg")
+```
+
+9. Select clone
+
+10. After the GitHub desktop finishes cloning the files to your local computer, select show in explorer to open the folder where the files were saved.
+
+
+```{r fig 5, echo=FALSE, out.width = '75%', fig.align="center"}
+knitr::include_graphics("./methods/howto_step10.jpg")
+```
+
+11. Open the dlinero-KBAs.github.io RStudio project. In the lower right corner,  select Notebook.Rmd to open the Rmarkdown file.
+
+
+```{r fig 6, echo=FALSE, out.width = '75%', fig.align="center"}
+knitr::include_graphics("./methods/howto_step11.jpg")
+```
+
+12. Now you are ready to modify the code and run it!
 
 ### Additional resources
 ***
 
 Explanation video: 
-
-### License
-***
-
-Content in the repository is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/)
 
 ### Citation
 ***

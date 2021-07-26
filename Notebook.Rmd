@@ -65,7 +65,7 @@ To access GBIF data, you must have an account on the platform. If you do not hav
 
 Once you have both the account and the API key, you can define new variables to store them. The following are just examples that you can replace with your information. 
 
- 
+
 ```{r user info example, eval=FALSE}
 GBIF_USER <- "pp"
 GBIF_PWD <- "pphh"
@@ -131,7 +131,6 @@ Once the request status is successful, we can download the data
 # download the data 
 z <- occ_download_get(download, path = "data/", overwrite = TRUE)
 ```
-
 
 ```{r import GBIF data}
 # Import data to an R dataset
@@ -424,6 +423,7 @@ for (i in 1:nrow(species)) {
 }
 
 ```
+
 
 ```{r second graph, fig.align = 'center'}
 # Create a table with the number of species per IUCN category

@@ -384,7 +384,6 @@ $(document).ready(function () {
 <li><a href="#github-repository-structure">GitHub repository structure</a></li>
 <li><a href="#howto">How to run the workflow code in your local computer</a></li>
 <li><a href="#additional-resources">Additional resources</a></li>
-<li><a href="#license">License</a></li>
 <li><a href="#citation">Citation</a></li>
 <li><a href="#contact">Contact</a></li>
 <li><a href="#references">References</a></li>
@@ -459,54 +458,76 @@ Fig 1. Scheme representing the main steps of the Locating KBAs workflow
 <div id="github-repository-structure" class="section level3">
 <h3>GitHub repository structure</h3>
 <hr />
-<pre><code>│   README.md                             : Description of the repository
-│   LICENSE                               : Repository license  
-│   dlinero-KBAs.github.io.Rproj          : RStudio project file 
-│   site.yml                              : Website configuration file
-│   index.Rmd                          : Markdown file with workflow overview
-│   index.html                         : html file derived from markdown
-│   Notebook.Rmd                          : Markdown file with workflow code
-│   Notebook.html                         : html file derived from markdown
+<pre><code>│   Notebook_files/figure-html            : Figures shown in the notebook(R Markdown)
 │
 └───data
 │   └───   Quindio.shp                    : Shapefile of the study area
-│   
+│
 └───methods
 │   └───   Workflow.jpeg                  : Workflow schema
+│   └───   howto_.jpg                     : Screenshots of the method to clone the repository
+│   └───   GIFS                           : GIFS to preview example outputs
 │   
 └───outputs
-    └───   Map_1.png                      : Example of the output of map function 1
-    └───   Map_2.png                      : Example of the output of map function 2
+│    └───   Map_1.png                     : Example of the output of map function 1
+│    └───   Map_2.png                     : Example of the output of map function 2
+│
+└───site_libs                             : Website rendering files
+│   
+│   .gitignore                            : Files to be ingored by github
+│   .nojekyll                             : Establish website themes
+│   GitHub_repository.Rmd                 : Markdown file with workflow code
+│   GitHub_repository.html                : html file derived from markdown
+│   LICENSE                               : Repository license  
+│   Notebook.Rmd                          : Markdown file with workflow code
+│   Notebook.html                         : html file derived from markdown
+│   README.md                             : Description of the repository
+│   site.yml                              : Website configuration file
+│   dlinero-KBAs.github.io.Rproj          : RStudio project file 
+│   index.Rmd                             : Markdown file with workflow overview
+│   index.html                            : html file derived from markdown
+│
 </code></pre>
 </div>
 <div id="howto" class="section level3">
 <h3>How to run the workflow code in your local computer</h3>
 <hr />
 <ol style="list-style-type: decimal">
-<li><p>Sign in into your GitHub account here.</p></li>
-<li><p>What were going to do is copy an existing repository into your profile. In the search tab type “dlinero/”. CLick on it. You will be taken to this repository.</p></li>
-<li><p>If you want to copy all the files to your own profile, including the ones used to create the website, then select Fork on the upper right corner.</p></li>
-<li><p>Then you will be able to see the repository in your profile.</p></li>
+<li><p>Sign in into your GitHub account <a href="https://github.com/">here</a>.</p></li>
+<li><p>To copy the repository to your profile, go to the search tab at the top of the screen and type dLinero-KBAs/dlinero-KBAs.github.io</p></li>
+</ol>
+<p><img src="methods/howto_step1.jpg" width="75%" style="display: block; margin: auto;" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Click on the repository</p></li>
+<li><p>Click the fork button in the right corner.</p></li>
+</ol>
+<p><img src="methods/howto_step5.jpg" width="75%" style="display: block; margin: auto;" /></p>
+<ol start="6" style="list-style-type: decimal">
 <li><p>If you want to open or modify the files and run the code in your local computer, open the GitHub Desktop software.</p></li>
-<li><p>To connect it with your GitHub account go to preferences, under accounts select sign in and fill the information.</p></li>
-<li><p>Then under the Git option put your user name and your user email.</p></li>
-<li><p>Select Save.</p></li>
-<li><p>Now when you click on the dropdown of Current repository, Select Add, choose clone repository and then click on the Locating KBAs workflow. Select the local path where you will like to store all the files. Click clone.</p></li>
-<li><p>Click show in finder to open the file explorer in the path you specified. Open the dlinero-KBAs.github.io.Rproj file to open the R project in RStudio. On the bottom right corner, where all the files are listed, select the Notebook.Rmd to open the Rmarkdown file.</p></li>
-<li><p>Now, you are ready to modify the code and run it!</p></li>
-<li><p>If you have modified the file and want to record the changes in your github repository. Go to the GitHub Desktop software, write the description of the change, and press the commit to master button</p></li>
-<li><p>Finally, press push origin.</p></li>
+<li><p>If this is your first time opening the software, it will ask you to sign into your GitHub account. Once done, select the Locating KBAs repository and click the clone button at the bottom.</p></li>
+</ol>
+<p><img src="methods/howto_step7.jpg" width="75%" style="display: block; margin: auto;" /></p>
+<ol start="8" style="list-style-type: decimal">
+<li>In the pop-up window, select GitHub.com and set the folder where you want to save all the files that are in the repository.</li>
+</ol>
+<p><img src="methods/howto_step8.jpg" width="75%" style="display: block; margin: auto;" /></p>
+<ol start="9" style="list-style-type: decimal">
+<li><p>Select clone</p></li>
+<li><p>After the GitHub desktop finishes cloning the files to your local computer, select show in explorer to open the folder where the files were saved.</p></li>
+</ol>
+<p><img src="methods/howto_step10.jpg" width="75%" style="display: block; margin: auto;" /></p>
+<ol start="11" style="list-style-type: decimal">
+<li>Open the dlinero-KBAs.github.io RStudio project. In the lower right corner, select Notebook.Rmd to open the Rmarkdown file.</li>
+</ol>
+<p><img src="methods/howto_step11.jpg" width="75%" style="display: block; margin: auto;" /></p>
+<ol start="12" style="list-style-type: decimal">
+<li>Now you are ready to modify the code and run it!</li>
 </ol>
 </div>
 <div id="additional-resources" class="section level3">
 <h3>Additional resources</h3>
 <hr />
 <p>Explanation video:</p>
-</div>
-<div id="license" class="section level3">
-<h3>License</h3>
-<hr />
-<p>Content in the repository is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a></p>
 </div>
 <div id="citation" class="section level3">
 <h3>Citation</h3>
