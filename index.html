@@ -392,12 +392,12 @@ $(document).ready(function () {
 <div id="introduction" class="section level3">
 <h3>Introduction</h3>
 <hr />
-<p>In the face of an alarming and accelerating loss of biodiversity, it is essential to safeguard the places that contribute significantly to the persistence of species around the world. The IUCN Species Survival and World Protected Areas Commissions recently led an effort to develop a <a href="https://portals.iucn.org/library/sites/library/files/documents/2016-048.pdf">standard</a> for identifying the places with the highest conservation value, the Key Biodiversity Areas (KBAs; IUCN, 2016). In the process of identifying KBAs, it is recommended to first conduct a comprehensive scoping analysis. However, this analysis requires a great effort to obtain, compile and analyze spatial data for as many taxonomic groups as possible. The <em>Locating KBAs workflow</em> helps to streamline the scoping analysis by using the R programming language and leveraging GBIF data. The workflow code accesses the occurrence data of species present in a user-defined area and determines all those that could trigger the criteria of the KBA standard. Subsequently, it helps users identifying the places where the potential trigger species occur in significant numbers. In this way, the workflow enables users to efficiently and transparently identify the sites where it is most appropriate to focus efforts on gathering information on mature individuals, engaging stakeholders, and applying the standard’s criteria.</p>
+<p>In the face of an alarming and accelerating loss of biodiversity, it is essential to safeguard the places that contribute significantly to the persistence of species around the world. The IUCN Species Survival and World Protected Areas Commissions recently led an effort to develop a <a href="https://portals.iucn.org/library/sites/library/files/documents/2016-048.pdf">standard</a> for identifying the places with the highest conservation value, the Key Biodiversity Areas (KBAs; IUCN, 2016). In the process of identifying KBAs, it is recommended to first conduct a comprehensive scoping analysis (KBA Standards and Appeals Committee, 2020). However, this analysis requires a great effort to obtain, compile and analyze spatial data for as many taxonomic groups as possible. The <em>Locating KBAs workflow</em> helps to streamline the scoping analysis by using the R programming language and leveraging GBIF data. The workflow code accesses the occurrence data of species present in a user-defined area and determines all those that could trigger the criteria of the KBA standard. Subsequently, it helps users identifying the places where the potential trigger species occur in significant numbers. In this way, the workflow enables users to efficiently and transparently identify the sites where it is most appropriate to focus efforts on gathering information on mature individuals, engaging stakeholders, and applying the standard’s criteria.</p>
 <style>
 div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 </style>
 <div class="blue">
-<p><strong>On this website you can find an overview of the workflow and the requirements and steps necessary to run the code. Click on the Notebook tab to see the workflow code and interact with the main results such as tables and maps. Click on the GitHub repository tab to be redirected to the repository where the code is stored. You can clone the code on your computer and modify and run it locally (see section <a href="#howto">How to run the workflow code in your local computer</a>).</strong></p>
+<p><strong>On this website you can find an overview of the workflow and the requirements and steps necessary to run the code. Click on the Notebook tab to see the workflow code and interact with the main results, such as tables and maps. Click on the GitHub repository tab to go to the repository where the script is stored. You can clone the script on your computer to modify and run it locally (see section <a href="#howto">How to run the workflow code in your local computer</a>).</strong></p>
 </div>
 </div>
 <div id="methodology" class="section level3">
@@ -410,7 +410,7 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <li><p>Have R and RStudio installed on your computer. If you do not have them, please download and install <a href="https://cran.r-project.org/">R</a> first and continue downloading and installing <a href="https://www.rstudio.com/products/rstudio/">RStudio</a>.</p></li>
 <li><p>Have a GitHub account and GitHub Desktop installed on your computer. You can create a free GitHub account <a href="https://github.com/">here</a> and download GitHub Desktop <a href="https://desktop.github.com/">here</a>.</p></li>
 <li><p>Have a GBIF account. If you do not have one yet, create it using this <a href="https://www.gbif.org/user/profile">link</a>.</p></li>
-<li><p>Request an API Key <a href="https://apiv3.iucnredlist.org/">here</a> to access the IUCN Red List information.</p></li>
+<li><p>Request an API token <a href="https://apiv3.iucnredlist.org/">here</a> to access the IUCN Red List information.</p></li>
 </ul>
 <p>Once you have met all the above requirements, open RStudio and make sure you have the following packages installed; otherwise use the following code to install them:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;Hmisc&quot;</span>, <span class="st">&quot;rgbif&quot;</span>, <span class="st">&quot;wellknown&quot;</span>, <span class="st">&quot;rredlist&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;ggspatial&quot;</span>, <span class="st">&quot;RCurl&quot;</span>, “xml2”, “rvest”, “sf”, “DT”, “leaflet”, “knitr”))</a></code></pre></div>
@@ -418,11 +418,11 @@ div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
 <div id="workflow" class="section level4">
 <h4>2. Workflow</h4>
 <p>The workflow code presented in the notebook tab, accessible through the GitHub repository, is designed to facilitate and streamline the scoping analysis for KBAs identification by leveraging the free and open access data of GBIF. Before exploring and running the workflow code, I encourage users to familiarize themselves with the <a href="https://portals.iucn.org/library/sites/library/files/documents/2016-048.pdf">Global Standard for the Identification of Key Biodiversity Areas</a> (IUCN, 2016) and the <a href="https://portals.iucn.org/library/sites/library/files/documents/2020-033-En.pdf">Guidelines for using this standard</a> (KBA Standards and Appeals Committee, 2020).</p>
-<p>In this workflow we will focus solely on the following species-based criteria:</p>
+<p>In this workflow, we will focus solely on the following species-based criteria:</p>
 <ul>
 <li>A1 for globally threatened species</li>
 <li>B for restricted-range species</li>
-<li>D1 for congregations of species during a particular stage of their life cycle</li>
+<li>D1 for congregations during a particular stage of the life cycle</li>
 </ul>
 <p>The workflow is divided into <strong>three main steps</strong>. First, the user downloads and cleans GBIF occurrence data. The code then retrieves information for each species present in the dataset, accessing the IUCN Red List and Bird Data Zone portals and the tools provided in the following KBA <a href="http://www.keybiodiversityareas.org/working-with-kbas/proposing-updating/criteria-tools">webpage</a>. With this information, the code <strong>selects the species present in the study area that have the potential to trigger the aforementioned KBA criteria.</strong> The second step is to apply two functions that allow the user to map the location of the potential trigger species and <strong>identify the sites where they occur in significant numbers.</strong> In the case of bird species, it is also possible to locate the places where they meet the thresholds of the KBA criteria considered. The last step of the workflow is to <strong>obtain the citations</strong> of the different sources of information consulted in the previous steps.</p>
 <p>The scheme below represents the overall workflow</p>
@@ -435,17 +435,17 @@ Fig 1. Scheme representing the main steps of the Locating KBAs workflow
 </div>
 <div id="detailed-step-by-step-instructions" class="section level4">
 <h4>3. Detailed step-by-step instructions</h4>
-<p>In the Notebook tab you will find the explanation of all the steps to complete the workflow and their associated code. Additionally, you will be able to interact with the most important results of the workflow, such as the table of potential trigger species and the maps of the sites where they occur in significant numbers.</p>
+<p>In the Notebook tab you will find the explanation of all the steps needed to complete the workflow and their associated code. Additionally, you will be able to interact with the most important results of the workflow, such as the table of potential trigger species and the maps of the sites where they occur in significant numbers.</p>
 </div>
 </div>
 <div id="example-outputs" class="section level3">
 <h3>Example outputs</h3>
 <hr />
-<p>The following is a preview of the table to identify potential trigger species for the above criteria (globally threatened species, restricted range species, species that form seasonal congregations). For bird species, it is also possible to obtain the global number of mature individuals and calculate the criteria thresholds,</p>
+<p>The following is a preview of the table to identify potential trigger species under KBA criteria (globally threatened species, restricted range species, species that form seasonal congregations). For bird species, it is also possible to obtain the global number of mature individuals and calculate the criteria thresholds.</p>
 <center>
-<img src="https://media.giphy.com/media/MRHsAJgDVj926npzAR/giphy.gif" width="600" />
+<img src="https://media.giphy.com/media/DWLQNMalkuxhvMXRbG/giphy.gif" width="600" />
 </center>
-<p>The code also contains a function that will help the user to identify the sites where the potential trigger species have large counts or where there are multiple records of potential trigger species.</p>
+<p>The script also contains a function that will help the user identifying the sites where potential trigger species have large counts or where there are multiple records of potential trigger species.</p>
 <center>
 <img src="https://media.giphy.com/media/oWrsaglCvK79HCkV82/giphy.gif" width="500" />
 <center>
@@ -478,7 +478,7 @@ Fig 1. Scheme representing the main steps of the Locating KBAs workflow
 <p><img src="methods/howto_step8.jpg" width="75%" style="display: block; margin: auto;" /></p>
 <ol start="9" style="list-style-type: decimal">
 <li><p>Select clone</p></li>
-<li><p>After the GitHub desktop finishes cloning the files to your local computer, select show in explorer to open the folder where the files were saved.</p></li>
+<li><p>After GitHub desktop finishes cloning the files to your local computer, select show in explorer to open the folder where the files were saved.</p></li>
 </ol>
 <p><img src="methods/howto_step10.jpg" width="75%" style="display: block; margin: auto;" /></p>
 <ol start="11" style="list-style-type: decimal">
@@ -486,7 +486,7 @@ Fig 1. Scheme representing the main steps of the Locating KBAs workflow
 </ol>
 <p><img src="methods/howto_step11.jpg" width="75%" style="display: block; margin: auto;" /></p>
 <ol start="12" style="list-style-type: decimal">
-<li>Now you are ready to modify the code and run it!</li>
+<li>Now you are ready to modify the script and run it!</li>
 </ol>
 </div>
 <div id="additional-resources" class="section level3">
@@ -497,20 +497,20 @@ Fig 1. Scheme representing the main steps of the Locating KBAs workflow
 <div id="citation" class="section level3">
 <h3>Citation</h3>
 <hr />
-<p>Linero D (2018) Locating KBAs: An automated workflow for identifying potential Key Biodiversity Areas. <a href="https://github.com/dLinero-KBAs/dlinero-KBAs.github.io">https://github.com/dLinero-KBAs/dlinero-KBAs.github.io</a></p>
+<p>Linero D (2021) Locating KBAs: An automated workflow for identifying potential Key Biodiversity Areas. <a href="https://github.com/dLinero-KBAs/dlinero-KBAs.github.io">https://github.com/dLinero-KBAs/dlinero-KBAs.github.io</a></p>
 </div>
 <div id="contact" class="section level3">
 <h3>Contact</h3>
 <hr />
 <p>Feel free to email me at <a href="mailto:daniela.linero@audubon.org" class="email">daniela.linero@audubon.org</a></p>
 <p><a href="https://www.researchgate.net/profile/Daniela-Linero">ResearchGate profile</a></p>
-<p><a href="www.linkedin.com/in/daniela-linero">LinkedIn profile</a></p>
+<p><a href="https://www.linkedin.com/in/daniela-linero/">LinkedIn profile</a></p>
 </div>
 <div id="references" class="section level3">
 <h3>References</h3>
 <hr />
 <ul>
-<li><p>Gueta, T., Carmel, Y. (2016). Quantifying the value of user-level data cleaning for big data: A case study using mammal distribution models. Ecological Informatics, 34, 139-145. <a href="https://doi.org/10.1016/j.ecoinf.2016.06.001" class="uri">https://doi.org/10.1016/j.ecoinf.2016.06.001</a></p></li>
+<li><p>Gueta, T., Carmel, Y (2016). Quantifying the value of user-level data cleaning for big data: A case study using mammal distribution models. Ecological Informatics, 34, 139-145. <a href="https://doi.org/10.1016/j.ecoinf.2016.06.001" class="uri">https://doi.org/10.1016/j.ecoinf.2016.06.001</a></p></li>
 <li><p>IUCN (2016). A Global Standard for the Identification of Key Biodiversity Areas, Version 1.0. First edition. Gland, Switzerland: IUCN.</p></li>
 <li><p>KBA Standards and Appeals Committee (2020). Guidelines for using A Global Standard for the Identification of Key Biodiversity Areas. Version 1.1. Prepared by the KBA Standards and Appeals Committee of the IUCN Species Survival Commission and IUCN World Commission on Protected Areas. Gland, Switzerland: IUCN. viii + 206 pp.</p></li>
 </ul>

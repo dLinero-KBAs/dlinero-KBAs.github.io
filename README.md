@@ -5,7 +5,7 @@ This GitHub repository is associated with the following website: [https://dliner
 
 ### Introduction 
 ***
-In the face of an alarming and accelerating loss of biodiversity, it is essential to safeguard the places that contribute significantly to the persistence of species around the world. The IUCN Species Survival and World Protected Areas Commissions recently led an effort to develop a [standard](https://portals.iucn.org/library/sites/library/files/documents/2016-048.pdf) for identifying the places with the highest conservation value, the Key Biodiversity Areas (KBAs; IUCN, 2016). In the process of identifying KBAs, it is recommended to first conduct a comprehensive scoping analysis. However, this analysis requires a great effort to obtain, compile and analyze spatial data for as many taxonomic groups as possible. The *Locating KBAs workflow* helps to streamline the scoping analysis by using the R programming language and leveraging GBIF data. The workflow code accesses the occurrence data of species present in a user-defined area and determines all those that could trigger the criteria of the KBA standard. Subsequently, it helps users identifying the places where the potential trigger species occur in significant numbers. In this way, the workflow enables users to efficiently and transparently identify the sites where it is most appropriate to focus efforts on gathering information on mature individuals, engaging stakeholders, and applying the standard’s criteria. 
+In the face of an alarming and accelerating loss of biodiversity, it is essential to safeguard the places that contribute significantly to the persistence of species around the world. The IUCN Species Survival and World Protected Areas Commissions recently led an effort to develop a [standard](https://portals.iucn.org/library/sites/library/files/documents/2016-048.pdf) for identifying the places with the highest conservation value, the Key Biodiversity Areas (KBAs; IUCN, 2016). In the process of identifying KBAs, it is recommended to first conduct a comprehensive scoping analysis (KBA Standards and Appeals Committee, 2020). However, this analysis requires a great effort to obtain, compile and analyze spatial data for as many taxonomic groups as possible. The *Locating KBAs workflow* helps to streamline the scoping analysis by using the R programming language and leveraging GBIF data. The workflow code accesses the occurrence data of species present in a user-defined area and determines all those that could trigger the criteria of the KBA standard. Subsequently, it helps users identifying the places where the potential trigger species occur in significant numbers. In this way, the workflow enables users to efficiently and transparently identify the sites where it is most appropriate to focus efforts on gathering information on mature individuals, engaging stakeholders, and applying the standard’s criteria. 
 
 
 ### Methodology 
@@ -60,9 +60,9 @@ Please visit this [website](https://dlinero-kbas.github.io/) and select the Note
 
 The following is a preview of the table to identify potential trigger species for the above criteria (globally threatened species, restricted range species, species that form seasonal congregations). For bird species, it is also possible to obtain the global number of mature individuals and calculate the criteria thresholds.
 
-![](https://media.giphy.com/media/MRHsAJgDVj926npzAR/giphy.gif)
+![](https://media.giphy.com/media/DWLQNMalkuxhvMXRbG/giphy.gif)
 
-The code also contains a function that will help the user to identify the sites where the potential trigger species have large counts or where there are multiple records of potential trigger species.
+The code also contains a function that will help the user identifying the sites where potential trigger species have large counts or where there are multiple records of potential trigger species.
 
 ![](https://media.giphy.com/media/oWrsaglCvK79HCkV82/giphy.gif)
 
@@ -83,7 +83,7 @@ A second function, available only for bird species, creates an interactive map s
 │
 └───methods
 │   └───   Workflow.jpeg                  : Workflow schema
-│   └───   howto_.jpg                     : Screenshots of the method to clone the 
+│   └───   howto_.jpg                     : Screenshots on how to clone the repository 
 │   
 └───outputs
 │    └───   Map_1.png                     : Example of the output of map function 1
@@ -93,7 +93,7 @@ A second function, available only for bird species, creates an interactive map s
 │   
 │   .gitignore                            : Files to be ingored by github
 │   .nojekyll                             : Establish website themes
-│   GitHub_repository.Rmd                 : Markdown file with workflow code
+│   GitHub_repository.Rmd                 : Markdown file with the repository link
 │   GitHub_repository.html                : html file derived from markdown
 │   LICENSE                               : Repository license  
 │   Notebook.Rmd                          : Markdown file with workflow code
@@ -143,7 +143,7 @@ A second function, available only for bird species, creates an interactive map s
 
 ![](methods/howto_step11.jpg)
 
-12. Now you are ready to modify the code and run it!
+12. Now you are ready to modify the script and run it!
 
 
 ### Additional resources
@@ -154,7 +154,7 @@ Introductory video: [https://youtu.be/oesnhDeYpHQ](https://youtu.be/oesnhDeYpHQ)
 ### Citation
 ***
 
-Linero D (2018) Locating KBAs: An automated workflow for identifying potential Key Biodiversity Areas. [https://github.com/dLinero-KBAs/dlinero-KBAs.github.io](https://github.com/dLinero-KBAs/dlinero-KBAs.github.io)
+Linero D (2021) Locating KBAs: An automated workflow for identifying potential Key Biodiversity Areas. [https://github.com/dLinero-KBAs/dlinero-KBAs.github.io](https://github.com/dLinero-KBAs/dlinero-KBAs.github.io)
 
 ### Contact
 ***
@@ -163,12 +163,12 @@ Feel free to email me at daniela.linero@audubon.org
 
 [ResearchGate profile](https://www.researchgate.net/profile/Daniela-Linero)
 
-[LinkedIn profile](www.linkedin.com/in/daniela-linero)
+[LinkedIn profile](https://www.linkedin.com/in/daniela-linero/)
 
 ### References
 ***
 
-* Gueta, T., Carmel, Y. (2016). Quantifying the value of user-level data cleaning for big data: A case study using mammal distribution models. Ecological Informatics, 34, 139-145. https://doi.org/10.1016/j.ecoinf.2016.06.001
+* Gueta, T., Carmel, Y (2016). Quantifying the value of user-level data cleaning for big data: A case study using mammal distribution models. Ecological Informatics, 34, 139-145. https://doi.org/10.1016/j.ecoinf.2016.06.001
 
 * IUCN (2016). A Global Standard for the Identification of Key Biodiversity Areas, Version 1.0. First edition. Gland, Switzerland: IUCN.
 
