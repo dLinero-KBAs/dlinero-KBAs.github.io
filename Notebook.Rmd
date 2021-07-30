@@ -29,7 +29,6 @@ knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 Load the libraries
 
 ```{r load libraries, message=FALSE, warning=FALSE}
-
 library(tidyverse)      # To do data wrangling 
 library(Hmisc)          # To use the %nin% binary operator 
 library(rgbif)          # To access records through the GBIF API
@@ -45,7 +44,6 @@ library(sp)             # To work with vector data
 library(DT)             # To display tables in the notebook
 library(leaflet)        # To make interactive maps 
 library(knitr)          # To knit the document
-
 ```
 
 
@@ -54,10 +52,8 @@ Define initial configuration parameters
 ```{r initial parameters}
 # Increase the time allowed to access URLs
 curlSetOpt(timeout = 8000)
-
 # Disable scientific notation
 options(scipen=999)
-
 ```
 
 
@@ -82,7 +78,6 @@ IUCN_REDLIST_KEY = "12345"
 ```{r load study area}
 # Load shapefile of the study area  
 st_area <- st_read("data/Quindio.shp", quiet = TRUE)
-
 # Convert shapefile into a Well Known Text object (WKT)
 wkt <- wellknown::sf_convert(st_area)
 ```
@@ -90,7 +85,6 @@ wkt <- wellknown::sf_convert(st_area)
 You can also set additional conditions for the data you want to download. Since we are going to explore the spatial location of potential trigger species, I will only download records that have coordinates. Also, I will only use records taken recently.
 
 ```{r request GBIF records}
-
 # Download GBIF records
 download <- occ_download(
   
@@ -114,8 +108,6 @@ download <- occ_download(
   user = GBIF_USER, 
   pwd = GBIF_PWD, 
   email = GBIF_EMAIL)
-
-
 ```
 
 After submitting the download request to GBIF, we must wait a few minutes for it to be accepted.
@@ -142,7 +134,6 @@ Now, we will plot the study area and the records downloaded from GBIF, to verify
 ```{r map all points}
 # Turn dataset into an sf object
 data_sf <- st_as_sf(data, coords = c("decimalLongitude", "decimalLatitude"), crs = 4326)
-
 # Plot points and study area
 ggplot(data = st_area) +
   geom_sf() +
@@ -152,7 +143,6 @@ ggplot(data = st_area) +
   annotation_scale() + # Add an annotation scale
   annotation_north_arrow(location='br') + # Add the north arrow to the bottom right
   ggtitle("Occurrence records that fall within the study area") # Add title to map 
-
 ```
 
 
@@ -166,13 +156,11 @@ print(paste("Number of initial records:", nrow(data)))
 
 
 ```{r remove duplicates}
-
 # Remove duplicates
 data_wDuplicates <- data %>%
   
   # Remove records that have the same combination of the following variables 
   distinct(decimalLongitude,decimalLatitude,speciesKey,datasetKey,eventDate,individualCount,basisOfRecord, .keep_all = TRUE) 
-
 ```
 
 ```{r records without duplicates, echo=FALSE}
@@ -198,7 +186,6 @@ unlist() %>% unique()
 GBIF_issues <- gbif_issues() %>%
   
   filter(issue %in% data_issues)
-
 print(paste(GBIF_issues$issue, GBIF_issues$description))
 ```
 
@@ -206,9 +193,7 @@ print(paste(GBIF_issues$issue, GBIF_issues$description))
 If you want to delete records with specific problems, you can use the following example code. However, in this case, I will not delete any of the records with issues. 
 
 ```{r GBIF issues exclutions, eval=FALSE}
-
 data_wIssues <- data_wDuplicates[which(grepl(paste(c("TAXON_MATCH_HIGHERRANK", "INSTITUTION_MATCH_NONE"), collapse = "|"), data_wDuplicates$issue) == FALSE), ]
-
 ```
 
 
@@ -232,8 +217,6 @@ data_spLevel <- data_wDuplicates %>%
   
   # drop levels
   droplevels()
-
-
 ```
 
 ```{r records species level, echo=FALSE}
@@ -269,7 +252,6 @@ print(paste("Number of species:", nrow(species)))
 ```{r species synonyms and origin}
 # For each species:
 for (i in 1:nrow(species)){
-
   # Verify if the species name is a synonym of the IUCN accepted name
   x <- rl_synonyms(name = species$species[i], key = IUCN_REDLIST_KEY, parse = TRUE)
   
@@ -319,18 +301,14 @@ With the resulting table, we can easily identify the species that have a red lis
 ```{r species table 1, echo=FALSE}
 # Show preview of the resulting table 
 datatable(species, caption = "Table 1: preview of the table used to compare GBIF and IUCN taxonomy and to identify the origin of the species present in the dataset", rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=TRUE))
-
 ```
 
 
 ```{r first graph, fig.align = 'center'}
-
 # Create a table with the number of species that have IUCN information and for the different types of origin, including the CHECK values.
 First_graph <- data.frame(table(species$origin)) %>%
   rename(Count = Freq) %>%
   mutate(group = "Species with IUCN information")
-
-
 First_graph2 <-data.frame(Var1= "CHECK",
                           Count= length(which(species$IUCN_name == "CHECK")),
                           group= "Species without IUCN information") %>%
@@ -344,8 +322,6 @@ First_graph2 <-data.frame(Var1= "CHECK",
   # Calculate the y position for count labels 
   group_by(group) %>%
   mutate(label_y = cumsum(Count) - 0.5 * Count)
-
-
 # Plot number of species with and without IUCN information
 ggplot(First_graph2, aes(fill=Var1, y=Count, x=group)) + 
   geom_bar(position="stack", stat="identity")  +
@@ -358,14 +334,12 @@ ggplot(First_graph2, aes(fill=Var1, y=Count, x=group)) +
   
   # Add count labels 
   geom_text(aes(y = label_y, label = Count), colour = "white")
-
 ```
 
 Finally, after reviewing the CHECK records, we will remove the species that do not have a red list assessment and / or are considered introduced to the study area. 
 
 
 ```{r non-trigger species}
-
 species <- species %>%
   
   # Remove species not assessed by the IUCN
@@ -377,8 +351,6 @@ species <- species %>%
   
   # drop levels
   droplevels()
-
-
 ```
 
 ```{r records species 2, echo=FALSE}
@@ -390,14 +362,11 @@ print(paste("Number of species that have a red list assessment and are considere
 
 
 ```{r new columns species}
-
 species <- species %>% 
   
   # Create columns for the table that we will use to identify the criteria that each species could potentially trigger
   mutate(commonName =  NA_character_, global_RedListCategory =  NA_character_, redList_Criteria = NA_character_,
          geographicallyRestricted =  NA_character_, migratory =  NA_character_)
-
-
 ```
 
 For criterion A1 we will identify threatened species (Vulnerable, Endangered and Critically Endangered) based on the IUCN Red List assessments.
@@ -421,7 +390,6 @@ for (i in 1:nrow(species)) {
   # Remove temporary variable
   rm(x)
 }
-
 ```
 
 
@@ -429,7 +397,6 @@ for (i in 1:nrow(species)) {
 # Create a table with the number of species per IUCN category
 Second_graph <- data.frame(table(species$global_RedListCategory)) %>%
   rename(Category = Var1)
-
 # Sum the counts for the LC and LR/lc categories
 Second_graph <- Second_graph %>%
   
@@ -438,8 +405,6 @@ Second_graph <- Second_graph %>%
   
   # Remove the rows of the categories of LC and LR/lc
   filter(Category %nin% c("LC", "LR/lc")) %>% droplevels()
-
-
 # Plot
 ggplot(Second_graph, aes(x=Category, y=Freq, fill=Category)) +
   geom_bar(stat="identity")+theme_minimal() +
@@ -455,24 +420,19 @@ ggplot(Second_graph, aes(x=Category, y=Freq, fill=Category)) +
   
   # Change y label
   ylab("Number of species")
-
 ```
 
 For criterion B2 we will identify range-restricted species using the list provided by the KBA [website](http://www.keybiodiversityareas.org/working-with-kbas/proposing-updating/criteria-tools). Use that link to download the file, remove the merged rows that provide contextualization information, and save to your data folder.
 
 ```{r KBA list}
-
 # Load list of geographically restricted species
 Range_restricted_species <- read.csv("data/Restricted_range_species_B2.csv", stringsAsFactors = FALSE, sep = ";")
-
 ```
 
 
 ```{r range-restricted}
-
 # Identify the index of species that appear in the geographically restricted species list
 geographicallyRestricted <- which(species$IUCN_name %in% Range_restricted_species$binomial)
-
 for (i in geographicallyRestricted){
   
   # Create a temporary variable that holds the information for a single species
@@ -491,7 +451,6 @@ for (i in geographicallyRestricted){
   # Remove temporary variable
   rm(x)
 }
-
 ```
 
 
@@ -501,10 +460,8 @@ We can use resources such as the [Birdlife Data Zone](http://datazone.birdlife.o
 
 
 ```{r non-resident range-restricted}
-
 # Review the species that are not range-restricted residents
 print(species[!is.na(species$geographicallyRestricted) & species$geographicallyRestricted != "Resident", c("species", "geographicallyRestricted")])
-
 ```
 
 
@@ -512,7 +469,6 @@ print(species[!is.na(species$geographicallyRestricted) & species$geographicallyR
 # Create table with the number of range-restricted species
 Third_graph <- data.frame(table(species$geographicallyRestricted, useNA = "ifany")) %>%
   rename(Type = Var1)
-
 # Plot number of species that are range restricted
 ggplot(Third_graph, aes(x=Type, y=Freq, fill=Type)) +
   geom_bar(stat="identity")+theme_minimal() +
@@ -522,17 +478,14 @@ ggplot(Third_graph, aes(x=Type, y=Freq, fill=Type)) +
   
   # Change y label
   ylab("Number of species")
-
 ```
 
 
 Criterion D1 is suitable for application to migratory species that form seasonal aggregations (KBA Standards and Appeals Committee, 2020). Therefore, we will identify migratory birds, and then we will have to verify if they congregate in our study area, using, for example, expert knowledge. We will use the [Birdlife Data Zone](http://datazone.birdlife.org/home) to identify the migratory birds. 
 
 ```{r migratory birds}
-
 # Create a vector with the index of species that are birds
 Aves <- which(species$class == "Aves")
-
 # For each bird species 
 for (i in Aves){
   
@@ -564,16 +517,13 @@ for (i in Aves){
   rm(base_url, species_url, complete_url, html)
   
 }
-
 ```
 
 
 ```{r fourth graph, fig.align = 'center'}
-
 # Create a table with the number of migratory bird species
 Fourth_graph <- data.frame(table(species$migratory)) %>%
   rename(Type = Var1)
-
 # Plot number of migratory bird species
 ggplot(Fourth_graph, aes(x= reorder(Type, -Freq) , y=Freq, fill=Type)) +
   geom_bar(stat="identity")+ theme_minimal() +
@@ -589,7 +539,6 @@ ggplot(Fourth_graph, aes(x= reorder(Type, -Freq) , y=Freq, fill=Type)) +
 ```
 
 ```{r list of potential trigger species}
-
 # Select the potential trigger species
 ptrigger_species <- species %>%
   
@@ -620,8 +569,6 @@ print(paste("Number of potential trigger species:", nrow(ptrigger_species)))
 ```{r list of potential trigger species table , echo=FALSE}
 # Show preview of the resulting table 
 datatable(ptrigger_species, caption = "Table 2: Species that could potentially trigger KBA criteria in the study area", rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=TRUE))
-
-
 ```
 
 
@@ -665,10 +612,8 @@ species_map <- ptrigger_species %>%
 ```
 
 ```{r first function}
-
 # Load a different polygon
 polygon <- st_read("data/IBAs_Quindio.shp", quiet = TRUE)
-
 # Define function 
 map_of_large_counts <- function(GBIFtable, potential_triggerSpecies, study_area, criteria, selected_species, individualCount_filter, gridCell_Size, extra_polygon){
   
@@ -930,7 +875,6 @@ map_of_large_counts <- function(GBIFtable, potential_triggerSpecies, study_area,
     hideGroup(c("Records with individual count filter", "Records weighted by individual counts", "Grid without individual count filter", "Grid with individual count filter")) # These layers will be off when executing the function
   
 }
-
 ```
 
 Explore the map, turning the following layers on and off:
@@ -953,7 +897,6 @@ If the number of species is too large and the legend expands beyond the frame, y
 ```{r apply function 1, message= FALSE}
 # Apply function
 map_of_large_counts(GBIFtable = data_spLevel, potential_triggerSpecies = ptrigger_species, study_area = st_area, criteria = "A1", selected_species = species_map, individualCount_filter = 15, gridCell_Size = 5000, extra_polygon = polygon)
-
 ```
 
 
@@ -965,7 +908,6 @@ To calculate the thresholds, we need the global number of mature individuals for
 ```{r global number mature individuals birds}
 # Create a new column to hold the global number of mature individuals 
 ptrigger_species <- ptrigger_species %>% mutate(global_matureIndividuals = NA)
-
 # Identify the index of potential trigger species that are birds
 Aves_trigger <- which(ptrigger_species$class == "Aves")
 ```
@@ -973,7 +915,6 @@ Aves_trigger <- which(ptrigger_species$class == "Aves")
 
 ```{r number trigger birds, echo=FALSE}
 print(paste("Number of potential trigger birds:", length(Aves_trigger)))
-
 ```
 
 ```{r global number mature individuals}
@@ -1017,7 +958,6 @@ for (i in Aves_trigger){
   rm(base_url, species_url, complete_url, html)
   
 }
-
 ```
 
 
@@ -1066,15 +1006,12 @@ for (i in 1:nrow(ptrigger_species)) {
                                              NA)
   
 }
-
 ```
 
 
 ```{r species thresholds table, echo=FALSE}
 # Show preview of the resulting table 
-
 datatable(ptrigger_species[Aves_trigger, ], caption = "Table 3. Criteria thresholds for each potential trigger bird in the study area", rownames = FALSE, filter = "top", options = list(pageLength = 5, scrollX=TRUE))
-
 ```
 
 
@@ -1093,7 +1030,6 @@ The arguments of the function are the following:
 
 
 ```{r create function 2}
-
 # Define function
 map_based_on_thresholds <- function(GBIFtable, potential_triggerSpecies, study_area, extra_polygon){
   
@@ -1304,7 +1240,6 @@ map_based_on_thresholds <- function(GBIFtable, potential_triggerSpecies, study_a
     hideGroup(c("0.2% threshold", "0.5% threshold", "1% threshold", "10% threshold", "Total global population"))
   
 }
-
 ```
 
 
@@ -1343,7 +1278,6 @@ knitr::include_graphics("outputs/Map_2.png")
 To cite the dataset downloaded from GBIF we will use the gbif_citation function.
 
 ```{r cite GBIF}
-
 # Cite GBIF dataset 
 gbif_citation(z)$download
 ```
@@ -1352,7 +1286,6 @@ If you are interested in citing the Red List API version use the following funct
 
 ```{r cite IUCN API version}
 rl_citation(key = IUCN_REDLIST_KEY)
-
 ```
 
 
@@ -1362,38 +1295,27 @@ If you want to cite the information of a species retrieved using the rredlist pa
 ```{r cite IUCN}
 # Example:
 rl_sp_citation("Penelope perspicax", key = IUCN_REDLIST_KEY, parse = TRUE)$result$citation
-
 ```
 
 
 Finally, if you want to cite the Birdlife Data Zone webpage for a specific species, use:
 
 ```{r cite Birdlife Data Zone}
-
-
 # Specify the birdlife base url
 base_url <- paste("http://datazone.birdlife.org/species/factsheet/")
-
 # Create a character vector with the name of the species that will be included in the url (everything must be in lower case and without special characters)
 species_url <- paste("cauca-guan", 
                      "penelope-perspicax", sep = "-")
-
 # Paste base url with species name
 complete_url <- paste0(base_url, species_url)
-
 # Turn HTML document into XML
 html  <- read_html(complete_url)
-
 # Access the citation 
 cite_BDZ <- html %>% html_nodes("hr+ p") %>% html_text() %>% str_replace_all("[\r\n]" , "")
-
 # Remove double spaces 
 cite_BDZ <- gsub("\\s+", " ", str_trim(cite_BDZ))
-
 print(cite_BDZ)
-
 ```
-
 
 
 

@@ -83,8 +83,7 @@ A second function, available only for bird species, creates an interactive map s
 │
 └───methods
 │   └───   Workflow.jpeg                  : Workflow schema
-│   └───   howto_.jpg                     : Screenshots of the method to clone the repository
-│   └───   GIFS                           : GIFS to preview example outputs
+│   └───   howto_.jpg                     : Screenshots of the method to clone the 
 │   
 └───outputs
 │    └───   Map_1.png                     : Example of the output of map function 1
@@ -100,7 +99,7 @@ A second function, available only for bird species, creates an interactive map s
 │   Notebook.Rmd                          : Markdown file with workflow code
 │   Notebook.html                         : html file derived from markdown
 │   README.md                             : Description of the repository
-│   site.yml                              : Website configuration file
+│   _site.yml                             : Website configuration file
 │   dlinero-KBAs.github.io.Rproj          : RStudio project file 
 │   index.Rmd                             : Markdown file with workflow overview
 │   index.html                            : html file derived from markdown
@@ -150,7 +149,7 @@ A second function, available only for bird species, creates an interactive map s
 ### Additional resources
 ***
 
-Explanation video: 
+Introductory video: [https://youtu.be/oesnhDeYpHQ](https://youtu.be/oesnhDeYpHQ)
 
 ### Citation
 ***
