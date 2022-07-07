@@ -44,13 +44,14 @@ To get started, you need to confirm that you have the following requirements:
 
 * Request an API token [here](https://apiv3.iucnredlist.org/) to access the IUCN Red List information. 
 
+* In case you want to assess bird species, request a copy of the dataset of global bird distributions from Birdlife International [here](http://datazone.birdlife.org/species/requestdis) (this may take several days).
+
 
 Once you have met all the above requirements, open RStudio and make sure you have the following packages installed; otherwise use the following code to install them:
 
 
 ```{r, eval=FALSE}
-
-install.packages(c("tidyverse", "Hmisc", "rgbif", "wellknown", "rredlist", "ggplot2", "ggspatial", "RCurl", “xml2”, “rvest”, “sf”, “DT”, “leaflet”, “knitr”))
+install.packages(c("tidyverse", "Hmisc", "rgbif", "wellknown", "rredlist", "ggplot2", "ggspatial", "RCurl", “xml2”, “rvest”, “sf”, "sp", “DT”, “leaflet”, “knitr”, "foreach", "doSNOW", "parallel", "stringi", "CoordinateCleaner", "countrycode"))
 ```
 
 
