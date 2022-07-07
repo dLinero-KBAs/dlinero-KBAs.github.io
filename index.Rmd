@@ -51,7 +51,7 @@ Once you have met all the above requirements, open RStudio and make sure you hav
 
 
 ```{r, eval=FALSE}
-install.packages(c("tidyverse", "Hmisc", "rgbif", "wellknown", "rredlist", "ggplot2", "ggspatial", "RCurl", “xml2”, “rvest”, “sf”, "sp", “DT”, “leaflet”, “knitr”, "foreach", "doSNOW", "parallel", "stringi", "CoordinateCleaner", "countrycode"))
+install.packages(c("tidyverse", "Hmisc", "rgbif", "wellknown", "rredlist", "ggplot2", "ggspatial", "RCurl", “xml2”, “rvest”, “sf”, "sp", “DT”, “leaflet”, “knitr”, "foreach", "doSNOW", "parallel", "stringi", "CoordinateCleaner", "countrycode", "taxadb"))
 ```
 
 
