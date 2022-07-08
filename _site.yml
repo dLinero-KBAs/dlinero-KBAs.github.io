@@ -6,7 +6,7 @@ navbar:
     - text: "Home"
       href: index.html
     - text: "Notebook"
-      href: Notebook.html
+      href: Notebook_V2.html
     - text: "GitHub Repository"
       href: GitHub_repository.html
     
